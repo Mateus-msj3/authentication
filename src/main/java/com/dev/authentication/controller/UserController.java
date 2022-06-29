@@ -1,6 +1,7 @@
 package com.dev.authentication.controller;
 
-import com.dev.authentication.model.dto.UserDTO;
+import com.dev.authentication.dto.UserDTO;
+import com.dev.authentication.dto.UserResponseDTO;
 import com.dev.authentication.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,14 +18,14 @@ public class UserController {
     private UserService userService;
 
     @GetMapping
-    public List<UserDTO> findAll() {
+    public List<UserResponseDTO> findAll() {
         return userService.findAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserDTO> findById(@PathVariable Long id) {
-        UserDTO userDTO = userService.findById(id);
-        return ResponseEntity.ok().body(userDTO);
+    public ResponseEntity<UserResponseDTO> findById(@PathVariable Long id) {
+        UserResponseDTO userResponseDTO = userService.findById(id);
+        return ResponseEntity.ok().body(userResponseDTO);
     }
 
     @PostMapping

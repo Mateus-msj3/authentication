@@ -1,8 +1,9 @@
 package com.dev.authentication.service;
 
+import com.dev.authentication.dto.UserResponseDTO;
 import com.dev.authentication.exception.ObjectNotFoundException;
 import com.dev.authentication.model.User;
-import com.dev.authentication.model.dto.UserDTO;
+import com.dev.authentication.dto.UserDTO;
 import com.dev.authentication.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
@@ -23,23 +24,23 @@ public class UserService {
     @Autowired
     private ModelMapper modelMapper;
 
-    public List<UserDTO> findAll() {
+    public List<UserResponseDTO> findAll() {
         //returns a list referring to the model
         List<User> users = userRepository.findAll();
         //loops through the list and converts each model item into a dto
         return users.stream()
-                .map(user -> modelMapper.map(user, UserDTO.class))
+                .map(user -> modelMapper.map(user, UserResponseDTO.class))
                 .collect(Collectors.toList());
     }
 
-    public UserDTO findById(Long id) {
+    public UserResponseDTO findById(Long id) {
         Optional<User> user = userRepository.findById(id);
         if (user.isEmpty()) {
            throw new ObjectNotFoundException("User not found");
         }
-        UserDTO userDTO = modelMapper.map(user.get(), UserDTO.class);
+        UserResponseDTO userResponseDTO = modelMapper.map(user.get(), UserResponseDTO.class);
         //create and return Optional de UserDTO
-        return userDTO;
+        return userResponseDTO;
     }
 
     public UserDTO save(UserDTO userDTO) {
